@@ -1,0 +1,30 @@
+<xml version="1.0" encoding="UTF-8">
+	<BOOLEAN>
+		
+	</BOOLEAN>
+	<INT>
+	</INT>
+	<STRING>
+	</STRING>
+	<JSON>
+            <REGISTER_SERVICE_PROCESS info="注册工作进程">
+                [
+                    {"name":"SchoolControl","service":"\\Service\\Lib\\App\\SchoolService","task":0},
+                    {"name":"TaskServer1","service":"\\Service\\Lib\\TaskService","task":1}
+                ]
+            </REGISTER_SERVICE_PROCESS>
+            <DB_SCHOOLYARD_LIGHTING>
+                {
+                "DB_TYPE":"mysql",
+                "DB_HOST":"127.0.0.1",
+                "DB_PORT":"3306",
+                "DB_NAME":"schoolyard_lighting",
+                "DB_USER":"root",
+                "DB_PWD":"www.galaxywind.com_ifanscloud.com"
+                }
+            </DB_SCHOOLYARD_LIGHTING>
+	</JSON>
+	<ARRAY>
+		
+	</ARRAY>
+</xml>

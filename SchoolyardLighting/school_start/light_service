@@ -1,0 +1,112 @@
+#!/bin/sh
+#   
+# swoole:    swoole Daemon   
+#   
+# chkconfig:    - 40 25  
+# description:  swoole Daemon   
+#   
+# Source function library. 
+
+#[ -f /etc/init.d/functions ] ||  exit 1
+. /etc/rc.d/init.d/functions
+
+[ -e "/etc/sysconfig/network" ] || exit 1
+. /etc/sysconfig/network
+
+[ $NETWORKING = "no" ] && exit 1
+
+PATH="/usr/local/bin:/usr/bin:/bin"
+ROOT_PATH="/home/galaxywind/wechat_server/"
+APP_PATH="${ROOT_PATH}wechat_aysnc/"
+SWOOLE="school_service_start.php"
+SWOOLE_SVN="http://10.10.0.32:8080/svn/wechat/trunk/wechat_aysnc/";
+
+if [ ! -d ${ROOT_PATH} ]; then
+	echo "$ROOT_PATH is not exist"  
+	exit 1
+fi
+
+
+
+start() {
+	#检查路径是否存在
+	if [ ! -d ${APP_PATH} ]; then
+		echo "${APP_PATH} is not exist"
+		update
+	fi
+	#检查启动脚本是否存在
+	cd ${APP_PATH}
+	
+	if [ ! -f ${SWOOLE} ]; then
+		echo "${SWOOLE} is not exist"  
+		exit 1
+	fi
+	echo $"Starting swoole: " 
+	
+	#检查是否已经开启服务
+	HAS_START=`ps -ef | grep ${SWOOLE} | wc -l`
+	if [ ${HAS_START} -gt 1 ];then
+		stop
+	fi
+	
+	#启动swoole服务
+	nohup php ${SWOOLE} >/dev/null 2>&1 &
+	
+	#检查启动服务结果
+	if [ $? == 0 ]; then
+		echo -e "Start ${SWOOLE}                         [  \e[32m\e[1mOK\e[0m  ]"
+	else
+		echo -e "Start ${SWOOLE}                         [  \e[32m\e[1mFALIED\e[0m  ]"
+	fi 
+}
+
+stop() { 
+	HAS_START=`ps -ef | grep -w ${SWOOLE} | wc -l`
+	if [ ${HAS_START} -eq 1 ];then
+		echo "${SWOOLE} pid is not running"
+	fi
+	echo $"Stoping ${SWOOLE}: " 
+	`ps -ef | grep -w  ${SWOOLE} | awk '{print $2;}' | xargs -i kill -9 {} > /dev/null 2>&1`
+	`ps -ef | grep -w  ${SWOOLE} | awk '{print $2;}' | xargs -i kill -9 {} > /dev/null 2>&1`
+	echo -e $"Stop ${SWOOLE}                         [  \e[32m\e[1mOK\e[0m  ]"
+}
+
+status() {
+	echo -e "\e[32m\e[1mShow swoole status :\e[0m  "  
+	
+	HAS_START=`ps -ef | grep -w ${SWOOLE} | wc -l`
+	if [ ${HAS_START} -gt 1 ];then
+		echo "${SWOOLE} is running"
+	else 
+		echo "${SWOOLE} is not running"
+	fi
+}
+
+update() {
+	cd ${ROOT_PATH}
+	svn_check=`svn checkout ${SWOOLE_SVN}`
+	echo ${svn_check}
+	if [ $? != 0 ]; then
+		exit 1
+	fi
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status
+	;;
+  update)
+    update
+	;;
+  *)
+   echo $"Usename: $0:   start|stop|status|update"
+   exit 1
+esac
+
+exit 0

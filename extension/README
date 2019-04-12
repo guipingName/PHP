@@ -1,0 +1,21 @@
+wechat编译:
+phpize
+./configure --with-wechat --with-php-config=/usr/bin/php-config
+make
+make install
+
+swoole1.8.0编译:
+phpize
+./configure  --enable-swoole-debug --enable-sockets  --enable-openssl
+make
+make install
+注意：发布版本取消--enable-swoole-debug
+
+swoole1.8.4编译:
+phpize
+./configure  --enable-swoole-debug --enable-sockets  --enable-openssl --enable-async-httpclient
+make
+make install
+注意：发布版本取消--enable-swoole-debug
+暂时不支持--enable-async-redis --enable-async-mysql编译
+

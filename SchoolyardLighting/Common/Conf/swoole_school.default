@@ -1,0 +1,28 @@
+<xml version="1.0" encoding="UTF-8">
+	<BOOLEAN>
+		
+	</BOOLEAN>
+	<INT>
+		<UDP_TIMEOUT_MS>3000</UDP_TIMEOUT_MS>
+	</INT>
+	<STRING>
+            <MEMCACHE_SERVER_IP info="memcache服务器">127.0.0.1</MEMCACHE_SERVER_IP>
+            <PHP_SESSION_NAME info="服务器php.ini设置的session_name">PHPSESSID</PHP_SESSION_NAME>
+            <LOGIN_ALIVE_TIME info="用户登陆有效时长">1800</LOGIN_ALIVE_TIME>
+	</STRING>
+	<JSON>
+            <MODULE_ALLOW_LIST info="注册访问模块">["School","Web"]</MODULE_ALLOW_LIST>
+            <DB_SCHOOLYARD_LIGHTING>
+                    {
+                    "DB_TYPE":"mysql",
+                    "DB_HOST":"127.0.0.1",
+                    "DB_PORT":"3306",
+                    "DB_NAME":"schoolyard_lighting",
+                    "DB_USER":"root",
+                    "DB_PWD":"www.galaxywind.com_ifanscloud.com"
+                    }
+            </DB_SCHOOLYARD_LIGHTING>
+	</JSON>
+	<ARRAY>
+	</ARRAY>
+</xml>
